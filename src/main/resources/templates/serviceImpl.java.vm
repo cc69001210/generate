@@ -1,0 +1,98 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.stereotype.Service;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import java.util.List;
+
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+#if(${kotlin})
+open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+
+}
+#else
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+    #set($serviceStr=${table.serviceName})
+    #set($serviceName=$serviceStr.substring(0,1).toLowerCase() + $serviceStr.substring(1,$serviceStr.length()))
+    #set($entityStr=${entity})
+    #set($entityName=$entityStr.substring(0,1).toLowerCase() + $entityStr.substring(1,$entityStr.length()))
+    #set($mapperStr=${table.mapperName})
+    #set($mapperName=$mapperStr.substring(0,1).toLowerCase() + $mapperStr.substring(1,$mapperStr.length()))
+
+    @Autowired
+    private ${table.mapperName} ${mapperName};
+
+    /**
+     *  分页查询 ${entity}
+     */
+    @Override
+    public Page<${entity}> list${entity}ByPage(PageHelper<${entity}> pageHelper) {
+        LambdaQueryWrapper<${entity}> queryWrapper = new LambdaQueryWrapper<>();
+        //编写查询条件
+        if (null != pageHelper.getData()) {
+            ${entity} ${entityName} = pageHelper.getData();
+            fillQueryWrapper(queryWrapper, ${entityName});
+        }
+
+        Page< ${entity}> page = new Page<>(pageHelper.getCurrent(), pageHelper.getSize());
+        return (Page<${entity}>) this.page(page, queryWrapper);
+    }
+
+
+    /**
+     * 列表查询  ${entity}
+     */
+    public List<${entity}> list${entity}(${entity} ${entityName}) {
+        LambdaQueryWrapper<${entity}> queryWrapper = new LambdaQueryWrapper<>();
+        //编写查询条件
+        if (null != ${entityName}) {
+            fillQueryWrapper(queryWrapper, ${entityName});
+        }
+        return this.list(queryWrapper);
+    }
+
+    /**
+     * 根据id查询 ${entity}
+     */
+    public ${entity} update${entity}(${entity} ${entityName}) {
+        // 校验参数
+
+        // 保存
+        this.updateById(${entityName});
+        return ${entityName};
+    }
+
+    /**
+     * 保存 ${entity}
+     */
+    public ${entity} save${entity}(${entity} ${entityName}) {
+        this.save(${entityName});
+        return ${entityName};
+    }
+
+
+    /**
+     *  封装  ${entity} 查询条件
+     */
+    private void fillQueryWrapper(LambdaQueryWrapper<${entity}> queryWrapper, ${entity} ${entityName}){
+        if (StringUtils.isNotEmpty(${entityName}.getId())) {
+            queryWrapper.eq(${entity}::getId, ${entityName}.getId());
+        }
+        // 下面根据需要自定添加查询条件
+    }
+
+}
+#end
