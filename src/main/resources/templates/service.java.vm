@@ -36,7 +36,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 根据id更新 ${entity}
      */
-    ${entity} update${entity}(${entityName});
+    ${entity} update${entity}(${entity} ${entityName});
 
     /**
      * 保存 ${entity}

@@ -5,9 +5,11 @@ import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
 import ${superServiceImplClassPackage};
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 /**
@@ -88,9 +90,9 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      *  封装  ${entity} 查询条件
      */
     private void fillQueryWrapper(LambdaQueryWrapper<${entity}> queryWrapper, ${entity} ${entityName}){
-        if (StringUtils.isNotEmpty(${entityName}.getId())) {
-            queryWrapper.eq(${entity}::getId, ${entityName}.getId());
-        }
+        // if (StringUtils.isNotEmpty(${entityName}.getId())) {
+        //    queryWrapper.eq(${entity}::getId, ${entityName}.getId());
+        // }
         // 下面根据需要自定添加查询条件
     }
 
